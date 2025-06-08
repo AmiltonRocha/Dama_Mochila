@@ -1,0 +1,5 @@
+package casadepraia;
+
+ class CasaPraiaAlogaritimo {
+    
+}
