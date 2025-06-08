@@ -69,43 +69,35 @@ public class Nqueens {
         return true; // Se passou por todas as verificações, é seguro!
     }
 
-    /**
-     * A função principal recursiva que resolve o problema usando backtracking.
-     * 'colunaAtual' é a coluna que estamos tentando preencher agora.
-     */
+/** A função principal recursiva que resolve o problema usando backtracking. 'colunaAtual' é a coluna que estamos tentando preencher agora.*/
+
     public boolean resolverProblema(int colunaAtual) {
-        // Caso base da recursão: Se a coluna atual é igual a N, todas as damas foram colocadas com sucesso.
+// Caso base da recursão: Se a coluna atual é igual a N, todas as damas foram colocadas com sucesso.
         if (colunaAtual >= N) {
             System.out.println("Solução encontrada para N = " + N + "!");
             imprimirTabuleiro();
             return true; // Uma solução foi encontrada!
         }
 
-        // Tenta colocar a dama em cada linha da coluna atual
+// Tenta colocar a dama em cada linha da coluna atual
         for (int linha = 0; linha < N; linha++) {
             if (ehSeguro(linha, colunaAtual)) {
                 tabuleiro[colunaAtual] = linha; // Coloca a dama
 
-                // COMENTÁRIOS PARA A QUESTÃO 3 (Adaptado para N Damas):
-                // Esta linha indica que estamos tentando colocar uma dama em uma posição específica.
+// COMENTÁRIOS PARA A QUESTÃO 3 (Adaptado para N Damas): Esta linha indica que estamos tentando colocar uma dama em uma posição específica.
                 System.out.println("Tentando colocar dama na Coluna " + colunaAtual + ", Linha " + linha);
-
-                // Chama recursivamente para a próxima coluna
+// Chama recursivamente para a próxima coluna
                 if (resolverProblema(colunaAtual + 1)) {
                     return true; // Se a próxima chamada recursiva encontrou uma solução, propaga o sucesso.
                 }
-
-                // SE CHEGOU AQUI, SIGNIFICA QUE A CHAMADA RECURSIVA ACIMA RETORNOU FALSE.
-                // ISSO É UM BACKTRACK!
+// SE CHEGOU AQUI, SIGNIFICA QUE A CHAMADA RECURSIVA ACIMA RETORNOU FALSE. ISSO É UM BACKTRACK!
                 System.out.println("BACKTRACK: Removendo dama da Coluna " + colunaAtual + ", Linha " + linha);
                 tabuleiro[colunaAtual] = -1; // Remove a dama (desfaz a última tentativa)
-                // Opcional: Imprime o tabuleiro após o backtrack para visualizar a remoção
+ // Opcional: Imprime o tabuleiro após o backtrack para visualizar a remoção
                 imprimirTabuleiro();
             }
         }
-
-        // Se nenhuma linha na coluna atual levou a uma solução, retorna false,
-        // indicando que a chamada anterior deve tentar outra posição (o que também é um backtrack).
+// Se nenhuma linha na coluna atual levou a uma solução, retorna false, indicando que a chamada anterior deve tentar outra posição (o que também é um backtrack).
         return false;
     }
 

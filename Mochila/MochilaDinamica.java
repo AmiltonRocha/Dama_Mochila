@@ -58,92 +58,55 @@ public class MochilaDinamica {
                              nome, peso, valor, valorPorPeso);
     }
     //implementa a solução do Problema da Mochila 0/1 usando Programação Dinâmica
+
     public static class ProblemaMochilaDinamica {
-
-        // Resolve o Problema da Mochila 0/1 usando Programação Dinâmica.
-        // Este método calcula o valor máximo que pode ser colocado em uma mochila
-        // de dada capacidade, escolhendo itens que não podem ser fracionados (0 ou 1, entra ou não entra).
-
+// Resolve o Problema da Mochila 0/1 usando Programação Dinâmica. Este método calcula o valor máximo que pode ser colocado em uma mochila de dada capacidade, escolhendo itens que não podem ser fracionados (0 ou 1, entra ou não entra).
         public void resolverMochilaDinamica(double capacidadeMochila, List<MochilaDinamica> itens) {
             int n = itens.size(); //pega o numero de itens
             int W = (int) capacidadeMochila; //pega a capacidade da mochila
 
-        // Inicialização da Matriz DP (Tabela de Programação Dinâmica) ---
-        // 'dp[i][w]' armazenará o valor máximo que pode ser obtido
-        // usando os primeiros 'i' itens com uma capacidade de mochila 'w'.
-        // As dimensões são (n + 1) para itens e (W + 1) para capacidade para incluir o caso base de 0 itens/0 capacidade.
-
+//armazenará o valor máximo que pode ser obtido usando os primeiros 'i' itens com uma capacidade de mochila 'w'. As dimensões são (n + 1) para itens e (W + 1) para capacidade para incluir o caso base de 0 itens/0 capacidade.
         double[][] dp = new double[n + 1][W + 1];
-
-        //Preenchimento da Matriz DP (Bottom-Up) ---
-        //Bottom-up  é uma abordagem de programação dinâmica que resolve problemas resolvendo primeiro os subproblemas menores e depois construindo a solução para problemas maiores usando as soluções dos subproblemas menores.
-        // Percorremos os itens (de 1 a 'n')
-       
+//Percorremos os itens (de 1 a 'n')
         for (int i = 1; i <= n; i++) {
-        
-            //// Percorremos as capacidades da mochila (de 0 a 'W')
-            
+// Percorremos as capacidades da mochila (de 0 a 'W')
             for (int w = 0; w <= W; w++){
-            
-                // Caso Base: Se não há itens (i=0) ou capacidade (w=0), o valor é 0.
-
+// Caso Base: Se não há itens (i=0) ou capacidade (w=0), o valor é 0.
                 if (i == 0 || w == 0) {
                     dp[i][w] = 0;
                 }else{
-                    
-                    // Pega o item atual que estou  considerando (o item 'i' na lista de objetos está no índice i-1)
+// Pega o item atual que estou  considerando (o item 'i' na lista de objetos está no índice i-1)
                      MochilaDinamica currentItem = itens.get(i - 1); 
-                     //Pegando um item da lista itens na posição i-1
-                     //Armazenando esse item em uma variável chamada currentItem do tipo MochilaDinamica
-
-
+//Pegando um item da lista itens na posição i-1 Armazenando esse item em uma variável chamada currentItem do tipo MochilaDinamica
                      if (currentItem.getPeso() <= w) { // verifica se  o peso do item atual é menor ou igual à capacidade atual da mochila
-
-                        // Opção 1: Incluir o item atual na mochila
-                        // O valor será o valor do item atual MAIS o valor máximo que podíamos obter
-                        // com os itens anteriores (i-1) e a capacidade restante (w - peso do item atual).
+// Opção 1: Incluir o item atual na mochila. O valor será o valor do item atual MAIS o valor máximo que podíamos obter com os itens anteriores (i-1) e a capacidade restante (w - peso do item atual).
                         double valorSeIncluir = currentItem.getValor() + dp[i - 1][(int)(w - currentItem.getPeso())];
-
-                        // Opção 2: Não incluir o item atual na mochila
-                        // O valor será o mesmo que o valor máximo que podíamos obter
-                        // com os itens anteriores (i-1) e a mesma capacidade 'w'.
+// Opção 2: Não incluir o item atual na mochila. O valor será o mesmo que o valor máximo que podíamos obter com os itens anteriores (i-1) e a mesma capacidade 'w'.
                         double valorSeNaoIncluir = dp[i - 1][w];
-
-                        // Escolhemos o máximo entre incluir e não incluir o item
+// Escolhemos o máximo entre incluir e não incluir o item
                         dp[i][w] = Math.max(valorSeIncluir, valorSeNaoIncluir);
                     } else {
-                        // Se o item atual não cabe na capacidade 'w', não podemos incluí-lo.
-                        // Então, o valor é o mesmo que o valor máximo obtido com os itens anteriores (i-1)
-                        // e a mesma capacidade 'w'.
+// Se o item atual não cabe na capacidade 'w', não podemos incluí-lo. Então, o valor é o mesmo que o valor máximo obtido com os itens anteriores (i-1) e a mesma capacidade 'w'.
                         dp[i][w] = dp[i - 1][w];
                     }  
-
-
-
-                     }
-                     
                 }
-
-
             }
-//            Rastreamento dos Itens Selecionados
-//         // Depois de preencher a matriz DP, dp[n][W] contém o valor máximo total.
-//         // Aqui vamos ver quais itens foram incluídos para atingir esse valor.
+        }
+//Rastreamento dos Itens Selecionados
+//Depois de preencher a matriz DP, dp[n][W] contém o valor máximo total.
+// Aqui vamos ver quais itens foram incluídos para atingir esse valor.
          List<String> itensSelecionados = new ArrayList<>();
          double res = dp[n][W]; // Começa com o valor máximo final
-         int currentW = W;       // Começa com a capacidade total
-
+         int currentW = W; // Começa com a capacidade total
          // Percorre a matriz DP de trás para frente, de baixo para cima
          for (int i = n; i > 0 && res > 0; i--) { // Se o valor atual (dp[i][currentW]) é diferente do valor que teríamos sem o item 'i' (dp[i-1][currentW]),
-//             // isso significa que o item 'i' foi incluído na solução ótima.
-//             // (Nota: É importante ter cuidado com comparações de ponto flutuante, mas para este problema
-
+// isso significa que o item 'i' foi incluído na solução ótima.
+//(Nota: É importante ter cuidado com comparações de ponto flutuante, mas para este problema
              if (res != dp[i - 1][currentW]) {
                 MochilaDinamica includedItem = itens.get(i - 1);
-                 itensSelecionados.add(includedItem.getNome()); // Adiciona o nome do item à lista
-                res -= includedItem.getValor();                // Subtrai o valor do item para continuar o rastreamento
+                 itensSelecionados.add(includedItem.getNome());// Adiciona o nome do item à lista
+                res -= includedItem.getValor();// Subtrai o valor do item para continuar o rastreamento
                  currentW -= includedItem.getPeso();// Diminui a capacidade para refletir o item removido
-                
                  // Mostrar a escolha feita (para o requisito do Passo 3 da questão)
    System.out.printf("ESCOLHA FEITA: Item '%s' (Peso: %.2f kg, Valor: R$%.2f) foi incluído.\n",
  includedItem.getNome(), includedItem.getPeso(), includedItem.getValor());
