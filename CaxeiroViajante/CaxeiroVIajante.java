@@ -1,5 +1,0 @@
-package CaxeiroViajante;
-
-class CaxeiroVIajante {
-    
-}
