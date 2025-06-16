@@ -61,12 +61,12 @@ public class OitoDamas {
         for (int linha = 0; linha < N; linha++) { // Tempo: O(N)
             if (ehSeguro(linha, colunaAtual)) { //Tempo: O(N)
                 tabuleiro[colunaAtual] = linha; //Tempo: O(1) // Coloca a dama (marca a posição no tabuleiro)
-                System.out.println("Tentando colocar dama na Coluna " + colunaAtual + ", Linha " + linha);
+                System.out.println("Tentando colocar dama na Coluna " + (colunaAtual + 1) + ", Linha " + (linha + 1));
                 if (resolverProblema(colunaAtual + 1)) { //Tempo: T(N-1)
                     return true; // Propaga o sucesso para cima (achamos uma solução!)
                 }
 // SE CHEGOU AQUI, SIGNIFICA QUE A CHAMADA RECURSIVA ACIMA RETORNOU FALSE. ISSO É UM BACKTRACK!
-                System.out.println("BACKTRACK: Removendo dama da Coluna " + colunaAtual + ", Linha " + linha);
+                System.out.println("BACKTRACK: Removendo dama da Coluna " + (colunaAtual + 1) + ", Linha " + (linha + 1));
                 tabuleiro[colunaAtual] = -1;//Tempo: O(1) // Remove a dama (volta ao estado "vazio")
                 imprimirTabuleiro(); 
                 // Opcional: para visualizar o estado após o backtrack
