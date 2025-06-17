@@ -30,7 +30,7 @@ public class OitoDamas {
 
 // Precisamos verificar apenas as colunas anteriores, pois as futuras ainda estão vazias.
 
-        for (int c = 0; c < coluna; c++) { // Tempo: O(N)(Coluna vai até N-1)
+        for (int c = 0; c < coluna; c++) { // Tempo: O(N)(Coluna vai até N-1) 3
 
 // 1. Verifica se há outra dama na mesma LINHA
             if (tabuleiro[c] == linha) {
@@ -51,7 +51,7 @@ public class OitoDamas {
     }
 
     /**A função principal recursiva que resolve o problema usando backtracking.'colunaAtual' é a coluna que estamos tentando preencher agora.*/
-    public boolean resolverProblema(int colunaAtual) { // Custo Total de Tempo: O(N!)
+    public boolean resolverProblema(int colunaAtual) { // Custo Total de Tempo: O(N!) 
         if (colunaAtual >= N) { //Tempo: O(1)
             System.out.println("Solução encontrada!");
             imprimirTabuleiro(); //Tempo: O(N^2)
